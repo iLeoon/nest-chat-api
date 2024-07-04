@@ -54,3 +54,8 @@ export type MessageCreatePayload = {
 
   message: Message;
 };
+
+export type TypingPayload = {
+  isTyping: boolean;
+  recipient: User | Account;
+};

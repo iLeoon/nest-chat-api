@@ -7,7 +7,7 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { SocketsMap } from './sockets.map';
-import { MessageCreatePayload } from 'src/utils/types';
+import { MessageCreatePayload, TypingPayload } from 'src/utils/types';
 @WebSocketGateway({
   cors: {
     origin: [`http://localhost:3001`],
@@ -46,5 +46,14 @@ export class Gateway {
 
     if (authorSocket) authorSocket.emit('onMessage', body);
     if (recipentSocket) recipentSocket.emit('onMessage', body);
+  }
+
+  @SubscribeMessage('event:typing')
+  handleIsTyping(@MessageBody() { recipient, isTyping }: TypingPayload) {
+    const recipientSocket = this.socketMap.getUserSocket(
+      recipient._id.toString(),
+    );
+
+    if (recipientSocket) recipientSocket.emit('onTyping', { isTyping });
   }
 }
