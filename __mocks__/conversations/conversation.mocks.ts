@@ -1,22 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { Account, User } from 'src/typeorm';
 import { ConversationRequestData } from 'src/utils/types';
-
-export const mocknAuthUser: User | Account = {
-  _id: new ObjectId('66090b00edce27048b10cabc'),
-  name: 'ahmed',
-  email: 'ahmed@yahoo.com',
-  image: null,
-  password: '123',
-};
-
-export const mockRecipient: User | Account = {
-  _id: new ObjectId('66090b00edce27048b10cabc'),
-  name: 'eihab',
-  email: 'eihab@yahoo.com',
-  image: null,
-  password: '123',
-};
+import { mocknAuthUser, mockRecipient } from '../../__mocks__/users/user.mocks';
 
 export const mockCreatedConversation = {
   _id: new ObjectId('66090b00edce27048b10cabc'),
@@ -54,7 +39,7 @@ export const mockConversations = [
   },
 ];
 
-export const mockAuthConversations = [
+export const mockAuthUserConversations = [
   {
     _id: new ObjectId('66090b00edce27048b10cabc'),
     creator: mocknAuthUser,
@@ -100,5 +85,11 @@ export const mockConversationServices = {
     );
   }),
 
-  getConversationById: jest.fn(),
+  getConversationById: jest.fn().mockImplementation((id: string) => {
+    return Promise.resolve({
+      _id: new ObjectId(id), //must be in object id format in order to be found in the database
+      creator: mocknAuthUser,
+      recipient: mockRecipient,
+    });
+  }),
 };
