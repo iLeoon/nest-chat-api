@@ -14,17 +14,13 @@ import { ConversationsService } from './conversations.service';
 import { AuthenticatedGuard } from 'src/guards/auth.guard';
 import { LoggerInterceptor } from 'src/interceptors/logger.interceptor';
 import { AuthUser } from 'src/decorators/auth.decorator';
-import { UsersService } from 'src/users/users.service';
 import { ValidateMongoIdPipe } from 'src/pipes/validate-mongoid.pipe';
 
 @UseInterceptors(LoggerInterceptor)
 @UseGuards(AuthenticatedGuard)
 @Controller('conversations')
 export class ConversationsController {
-  constructor(
-    private readonly conversationService: ConversationsService,
-    private readonly userService: UsersService,
-  ) {}
+  constructor(private readonly conversationService: ConversationsService) {}
 
   @Get('find')
   async getConversations() {
@@ -40,13 +36,13 @@ export class ConversationsController {
       ...ConversationData,
       user,
     });
+
     return conversation;
   }
 
   @Get()
-  async getAuthUserConversations(@AuthUser() { email }: User | Account) {
-    const authUser = await this.userService.getUserByEmail(email);
-    return await this.conversationService.getAuthConversations(authUser);
+  async getAuthUserConversations(@AuthUser() user: User | Account) {
+    return await this.conversationService.getAuthConversations(user);
   }
 
   @Get(':id')

@@ -6,7 +6,7 @@ import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import sessionConfig from './sessions/session.config';
-import { ExceptionLogger } from './exceptionFilters/logger.filter';
+import { ExceptionLogger } from './filters/logger.filter';
 import { AuthenticatedSocketIoAdapter } from './gateway/gateway.adaptar';
 
 async function bootstrap() {
