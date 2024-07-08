@@ -6,7 +6,7 @@ import {
   mockConversations,
   mockConversationServices,
   mockCreatedConversation,
-  mockAuthConversations,
+  mockAuthUserConversations,
 } from '../../__mocks__/index';
 
 describe('ConversationsController', () => {
@@ -52,7 +52,16 @@ describe('ConversationsController', () => {
     it('should return an array of the authenticated user conversations', async () => {
       await expect(
         controller.getAuthUserConversations(mocknAuthUser),
-      ).resolves.toEqual(mockAuthConversations);
+      ).resolves.toEqual(mockAuthUserConversations);
+    });
+  });
+
+  describe('getConversation', () => {
+    it('should return the conversation by the specified id', async () => {
+      const id = '66090b00edce27048b10cabc';
+      await expect(controller.getConversation(id)).resolves.toEqual(
+        mockConversations[0],
+      );
     });
   });
 });
