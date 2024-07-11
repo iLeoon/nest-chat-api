@@ -39,6 +39,10 @@ export class MessagesService {
       conversation,
       newMessage,
     );
+    await this.conversationService.updateLastMessageSent(
+      conversation,
+      newMessage,
+    );
 
     const messageData = {
       conversation: {

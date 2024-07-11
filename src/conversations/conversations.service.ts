@@ -23,10 +23,6 @@ export class ConversationsService {
     private readonly userService: UsersService,
   ) {}
 
-  async getAllConversations() {
-    return await this.conversationRepo.find();
-  }
-
   async createConversation(request: ConversationRequestData) {
     const recipient = await this.userService.getUserByEmail(request.recipient);
     if (recipient.email === request.user.email)
@@ -82,12 +78,14 @@ export class ConversationsService {
       );
     }
 
-    await this.conversationRepo.updateOne(
+    return await this.conversationRepo.updateOne(
       { _id: conversation._id },
       { $push: { messages: message } as any },
     );
+  }
 
-    await this.conversationRepo.updateOne(
+  async updateLastMessageSent(conversation: Conversation, message: Message) {
+    return await this.conversationRepo.updateOne(
       {
         _id: conversation._id,
       },

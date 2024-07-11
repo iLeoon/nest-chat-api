@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { User, Account } from 'src/typeorm';
 
-export const mocknAuthUser: User | Account = {
+export const mockAuthUser: User | Account = {
   _id: new ObjectId('66090b00edce27048b10cabc'),
   name: 'ahmed',
   email: 'ahmed@yahoo.com',
@@ -19,7 +19,7 @@ export const mockRecipient: User | Account = {
 export const mockUserServcices = {
   getUserByEmail: jest.fn().mockImplementation((email: string) => {
     return Promise.resolve({
-      ...mocknAuthUser,
+      ...mockAuthUser,
       email,
     });
   }),
