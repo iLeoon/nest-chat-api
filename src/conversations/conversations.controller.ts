@@ -22,11 +22,6 @@ import { ValidateMongoIdPipe } from 'src/pipes/validate-mongoid.pipe';
 export class ConversationsController {
   constructor(private readonly conversationService: ConversationsService) {}
 
-  @Get('find')
-  async getConversations() {
-    return await this.conversationService.getAllConversations();
-  }
-
   @Post('/create')
   async createConv(
     @AuthUser() user: User | Account,

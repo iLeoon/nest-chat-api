@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConversationsController } from './conversations.controller';
 import { ConversationsService } from './conversations.service';
 import {
-  mocknAuthUser,
+  mockAuthUser,
   mockConversations,
   mockConversationServices,
-  mockCreatedConversation,
+  mockNewConversation,
   mockAuthUserConversations,
 } from '../../__mocks__/index';
 
@@ -30,28 +30,20 @@ describe('ConversationsController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getConversations', () => {
-    it('should return an array of conversations', async () => {
-      await expect(controller.getConversations()).resolves.toEqual(
-        mockConversations,
-      );
-    });
-  });
-
   describe('createConv', () => {
     it('should create a conversation and return the created conversation', async () => {
-      const conversation = controller.createConv(mocknAuthUser, {
+      const conversation = controller.createConv(mockAuthUser, {
         recipient: 'eihab@yahoo.com',
       });
 
-      await expect(conversation).resolves.toEqual(mockCreatedConversation);
+      await expect(conversation).resolves.toEqual(mockNewConversation);
     });
   });
 
   describe('getAuthConversations', () => {
     it('should return an array of the authenticated user conversations', async () => {
       await expect(
-        controller.getAuthUserConversations(mocknAuthUser),
+        controller.getAuthUserConversations(mockAuthUser),
       ).resolves.toEqual(mockAuthUserConversations);
     });
   });

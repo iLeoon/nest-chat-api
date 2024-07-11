@@ -1,18 +1,57 @@
 import { ObjectId } from 'mongodb';
-import { Account, User } from 'src/typeorm';
-import { ConversationRequestData } from 'src/utils/types';
-import { mocknAuthUser, mockRecipient } from '../../__mocks__/users/user.mocks';
+import { Account, Conversation, User } from 'src/typeorm';
+import { mockAuthUser, mockRecipient } from '../../__mocks__/users/user.mocks';
+import { mockNewMessage } from '../../__mocks__/messages/messages.mocks';
 
-export const mockCreatedConversation = {
+export const mockConversationById = {
+  // the encrypted password is not being returned for the creator / recipient
+  // as it should not be
   _id: new ObjectId('66090b00edce27048b10cabc'),
-  creator: mocknAuthUser,
+  creater: {
+    _id: new ObjectId('66090b00edce27048b10cabc'),
+    image: null,
+    name: 'leon',
+    email: 'leon@yahoo.com',
+  },
+  recipient: {
+    _id: new ObjectId('66090b00edce27048b10cabc'),
+    image: null,
+    name: 'tal',
+    email: 'tal@yahoo.com',
+  },
+};
+
+export const mockNewConversation: Conversation = {
+  _id: new ObjectId('66090b00edce27048b10cabc'),
+  creator: mockAuthUser,
   recipient: mockRecipient,
+  messages: null,
+  lastMessageSent: null,
+  created_at: new Date(),
+};
+
+export const mockUpdatedConversation: Conversation = {
+  _id: new ObjectId('66090b00edce27048b10cabc'),
+  creator: mockAuthUser,
+  recipient: mockRecipient,
+  messages: [mockNewMessage],
+  lastMessageSent: mockNewMessage,
+  created_at: new Date(),
+};
+
+export const mockMultipleMessagesConversation: Conversation = {
+  _id: new ObjectId('66090b00edce27048b10cabc'),
+  creator: mockAuthUser,
+  recipient: mockRecipient,
+  messages: [mockNewMessage, mockNewMessage],
+  lastMessageSent: mockNewMessage,
+  created_at: new Date(),
 };
 
 export const mockConversations = [
   {
     _id: new ObjectId('66090b00edce27048b10cabc'),
-    creator: mocknAuthUser,
+    creator: mockAuthUser,
     recipient: mockRecipient,
   },
   {
@@ -24,7 +63,7 @@ export const mockConversations = [
       image: null,
       password: '123',
     },
-    recipient: mocknAuthUser,
+    recipient: mockAuthUser,
   },
   {
     _id: new ObjectId('66090b00edce27048b10cabc'),
@@ -42,7 +81,7 @@ export const mockConversations = [
 export const mockAuthUserConversations = [
   {
     _id: new ObjectId('66090b00edce27048b10cabc'),
-    creator: mocknAuthUser,
+    creator: mockAuthUser,
     recipient: mockRecipient,
   },
   {
@@ -54,24 +93,12 @@ export const mockAuthUserConversations = [
       image: null,
       password: '123',
     },
-    recipient: mocknAuthUser,
+    recipient: mockAuthUser,
   },
 ];
 
 export const mockConversationServices = {
-  createConversation: jest
-    .fn()
-    .mockImplementation((request: ConversationRequestData) => {
-      const recipient = {
-        ...mockRecipient,
-        email: request.recipient,
-      };
-      return Promise.resolve({
-        _id: new ObjectId('66090b00edce27048b10cabc'),
-        creator: request.user,
-        recipient,
-      });
-    }),
+  createConversation: jest.fn().mockResolvedValue(mockNewConversation),
 
   getAllConversations: jest.fn().mockResolvedValue(mockConversations),
 
@@ -88,7 +115,7 @@ export const mockConversationServices = {
   getConversationById: jest.fn().mockImplementation((id: string) => {
     return Promise.resolve({
       _id: new ObjectId(id), //must be in object id format in order to be found in the database
-      creator: mocknAuthUser,
+      creator: mockAuthUser,
       recipient: mockRecipient,
     });
   }),
