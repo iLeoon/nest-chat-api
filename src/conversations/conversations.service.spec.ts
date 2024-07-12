@@ -103,9 +103,7 @@ describe('ConversationsService', () => {
         { $set: { messages: [mockNewMessage] } },
       );
     });
-  });
 
-  describe('updateConversationMessages', () => {
     it('should update the messages array for a conversation if not null', async () => {
       const repoSpy = jest
         .spyOn(repo, 'updateOne')
@@ -120,7 +118,7 @@ describe('ConversationsService', () => {
   });
 
   describe('updateLastMessageSent', () => {
-    it('should set the last message sent to the db', async () => {
+    it('should save the last message sent in a conversation to the db', async () => {
       const repoSpy = jest
         .spyOn(repo, 'updateOne')
         .mockResolvedValueOnce(mockUpdatedConversation);

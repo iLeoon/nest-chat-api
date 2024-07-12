@@ -12,7 +12,6 @@ import {
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AuthenticatedGuard } from 'src/guards/auth.guard';
 import { LoggerInterceptor } from 'src/interceptors/logger.interceptor';
-import { GetUserDTO } from './dto/get-user.dto';
 import { AuthUser } from 'src/decorators/auth.decorator';
 import { Account, User } from 'src/typeorm';
 
@@ -30,22 +29,11 @@ export class UsersController {
     return await this.usersService.create(createUserDto);
   }
 
-  @Get()
-  @ApiOperation({ summary: 'Get all users' })
-  async getAllUsers() {
-    return await this.usersService.getAllUsers();
-  }
-
   @Get(':email')
   @ApiOperation({ summary: 'Get user by email' })
   @ApiParam({ name: 'email', required: true })
   async getUserByEmail(@Param('email') email: string) {
     return await this.usersService.getUserByEmail(email);
-  }
-
-  @Get('/id/me')
-  async getUserById(@Body() userId: GetUserDTO) {
-    return await this.usersService.findOneById(userId.id);
   }
 
   @Get('/authorized/user')
