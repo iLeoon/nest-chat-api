@@ -12,5 +12,9 @@
   },
   "setupFilesAfterEnv": [
     "<rootDir>/setup.ts"
+  ],
+  "moduleDirectories": [
+    "<rootDir>/../",
+    "node_modules"
   ]
 }

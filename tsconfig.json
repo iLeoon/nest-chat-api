@@ -16,6 +16,7 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true
   }
 }
