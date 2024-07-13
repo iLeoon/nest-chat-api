@@ -24,7 +24,7 @@ import { GatewayModule } from './gateway/gateway.module';
       type: 'mongodb',
       url: process.env.MONGO_URI,
       synchronize: true,
-      database: 'chat-app',
+      database: process.env.NODE_ENV === 'test' ? 'chat-app-test' : 'chat-app',
       entities: [User, Account, Message, Conversation, ChatInvitation],
     }),
 
