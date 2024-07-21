@@ -5,22 +5,23 @@ import { AppModule } from 'src/app.module';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
-
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
+
     await app.init();
   });
 
-  it('(POST) create a user', () => {
-    return request(app.getHttpServer())
-      .post('/users')
-      .send({ name: 'eihab', email: 'eihab@yahoo.com', password: 'ahmed@123' })
-      .then((respone) => {
-        console.log(respone.body);
+  describe('create', () => {
+    it('(POST) create a user', () => {
+      return request(app.getHttpServer()).post('/users').send({
+        name: 'ahmed',
+        email: 'ahmed@yahoo.com',
+        password: 'ahmed@123',
       });
+    });
   });
 });

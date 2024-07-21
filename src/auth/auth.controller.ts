@@ -49,9 +49,9 @@ export class AuthController {
     description: 'The user to login',
   })
   @Post('login')
-  login(@Body() payload: LoginDto, @Req() req) {
-    const { email, name, image } = req.user;
-    return { email, name, image };
+  async login(@Req() req) {
+    const { name, email, image } = req.user;
+    return { name, email, image };
   }
 
   @UseGuards(GoogleAuthGuard)
