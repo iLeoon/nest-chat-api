@@ -14,6 +14,7 @@ import { UsersService } from 'src/users/users.service';
 import { filterObject } from 'src/utils/functions/deleteObjectKey';
 import { ConversationRequestData } from 'src/utils/types';
 import { MongoRepository } from 'typeorm';
+import { doesExist } from 'src/utils/conversations/doesExist';
 
 @Injectable()
 export class ConversationsService {
@@ -28,6 +29,18 @@ export class ConversationsService {
     if (recipient.email === request.user.email)
       throw new HttpException(
         "You can't create a conversation with yourself",
+        HttpStatus.BAD_REQUEST,
+      );
+
+    const existedConversation = await doesExist(
+      request.user,
+      recipient,
+      this.conversationRepo,
+    );
+
+    if (existedConversation)
+      throw new HttpException(
+        'You already have a conversation with that user.',
         HttpStatus.BAD_REQUEST,
       );
 

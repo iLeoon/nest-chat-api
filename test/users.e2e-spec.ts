@@ -27,7 +27,7 @@ describe('UserController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await repo.delete({ email: 'leon@yahoo.com' });
+    await repo.delete({ email: 'vim@yahoo.com' });
     app.close();
   });
 
@@ -47,8 +47,8 @@ describe('UserController (e2e)', () => {
       return request(app.getHttpServer())
         .post('/users')
         .send({
-          name: 'ahmed',
-          email: 'leon@yahoo.com',
+          name: 'vim',
+          email: 'vim@yahoo.com',
           password: 'ahmed@123',
         })
         .set('Cookie', cookie)
@@ -59,8 +59,8 @@ describe('UserController (e2e)', () => {
       return request(app.getHttpServer())
         .post('/users')
         .send({
-          name: 'ahmed',
-          email: 'leon@yahoo.com',
+          name: 'vim',
+          email: 'vim@yahoo.com',
           password: 'ahmed@123',
         })
         .set('Cookie', cookie)
