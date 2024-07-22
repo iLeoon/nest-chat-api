@@ -76,7 +76,9 @@ export class AuthController {
   @Get('logout')
   logout(@Req() req, @Res() res) {
     req.session.destroy(function () {
-      res.clearCookie('chat-app');
+      res.clearCookie(
+        process.env.NODE_ENV === 'test' ? 'chat-app-test' : 'chat-app',
+      );
       res.send('Ok');
     });
   }
