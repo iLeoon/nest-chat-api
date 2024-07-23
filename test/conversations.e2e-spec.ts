@@ -84,6 +84,29 @@ describe('ConversationController (e2e)', () => {
     });
   });
 
+  describe('getConversation', () => {
+    it('(GET) should return the specified conversation through the conversation Id', async () => {
+      const conversation = await repo.findOne({
+        where: {
+          lastMessageSent: null,
+          messages: null,
+        },
+      });
+      const conversationId = conversation._id.toString();
+      return request(app.getHttpServer())
+        .get(`/conversations/${conversationId}`)
+        .set('Cookie', cookie)
+        .expect(200);
+    });
+
+    it('(GET) should throw an error if the id is not in the db', async () => {
+      return request(app.getHttpServer())
+        .get(`/conversation/12345`)
+        .set('Cookie', cookie)
+        .expect(404);
+    });
+  });
+
   describe('getAuthUserConversations', () => {
     it('(GET) should return an array of the conversations of the auth user', () => {
       return request(app.getHttpServer())

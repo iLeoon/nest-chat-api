@@ -22,6 +22,7 @@ export class MessagesService {
   async createMessage(msg: MessageRequestData) {
     const conversation = await this.conversationService.getConversationById(
       msg.conversationId,
+      msg.author,
     );
 
     if (

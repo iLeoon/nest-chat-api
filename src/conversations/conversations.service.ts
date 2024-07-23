@@ -3,6 +3,7 @@ import {
   HttpStatus,
   Injectable,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ObjectId } from 'mongodb';
@@ -63,7 +64,7 @@ export class ConversationsService {
     return conversations;
   }
 
-  async getConversationById(conversationId: string) {
+  async getConversationById(conversationId: string, user: User | Account) {
     const conversation = await this.conversationRepo.findOne({
       where: { _id: new ObjectId(conversationId) },
     });
@@ -71,6 +72,14 @@ export class ConversationsService {
     if (!conversation) {
       throw new NotFoundException(
         'There is no conversation found with that Id.',
+      );
+    }
+    if (
+      conversation.creator._id.toString() !== user._id.toString() &&
+      conversation.recipient._id.toString() !== user._id.toString()
+    ) {
+      throw new BadRequestException(
+        'You are not allowed to fetch this conversation',
       );
     }
     const newConversation = filterObject<Conversation>(

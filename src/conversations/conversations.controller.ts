@@ -41,7 +41,10 @@ export class ConversationsController {
   }
 
   @Get(':id')
-  async getConversation(@Param('id', ValidateMongoIdPipe) id: string) {
-    return await this.conversationService.getConversationById(id);
+  async getConversation(
+    @AuthUser() user: User | Account,
+    @Param('id', ValidateMongoIdPipe) id: string,
+  ) {
+    return await this.conversationService.getConversationById(id, user);
   }
 }
