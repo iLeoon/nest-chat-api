@@ -34,11 +34,7 @@ export class UsersController {
   @ApiParam({ name: 'email', required: true })
   async getUserByEmail(@Param('email') email: string) {
     const user = await this.usersService.getUserByEmail(email);
-    return {
-      name: user.name,
-      email: user.email,
-      image: user.image,
-    };
+    return user;
   }
 
   @Get('/authorized/user')

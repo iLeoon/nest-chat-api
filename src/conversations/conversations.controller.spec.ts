@@ -51,9 +51,9 @@ describe('ConversationsController', () => {
   describe('getConversation', () => {
     it('should return the conversation by the specified id', async () => {
       const id = '66090b00edce27048b10cabc';
-      await expect(controller.getConversation(id)).resolves.toEqual(
-        mockConversations[0],
-      );
+      await expect(
+        controller.getConversation(mockAuthUser, id),
+      ).resolves.toEqual(mockConversations[0]);
     });
   });
 });
