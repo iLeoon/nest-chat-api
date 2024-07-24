@@ -7,7 +7,7 @@ export const mockConversationById = {
   // the encrypted password is not being returned for the creator / recipient
   // as it should not be
   _id: new ObjectId('66090b00edce27048b10cabc'),
-  creater: {
+  creator: {
     _id: new ObjectId('66090b00edce27048b10cabc'),
     image: null,
     name: 'leon',
@@ -112,11 +112,13 @@ export const mockConversationServices = {
     );
   }),
 
-  getConversationById: jest.fn().mockImplementation((id: string) => {
-    return Promise.resolve({
-      _id: new ObjectId(id), //must be in object id format in order to be found in the database
-      creator: mockAuthUser,
-      recipient: mockRecipient,
-    });
-  }),
+  getConversationById: jest
+    .fn()
+    .mockImplementation((id: string, user: User | Account) => {
+      return Promise.resolve({
+        _id: new ObjectId(id), //must be in object id format in order to be found in the database
+        creator: user,
+        recipient: mockRecipient,
+      });
+    }),
 };

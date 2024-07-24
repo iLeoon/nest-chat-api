@@ -4,6 +4,7 @@ import { Conversation } from 'src/typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/users.service';
+import * as utils from 'src/utils/conversations/doesExist';
 import {
   mockAuthUserConversations,
   mockConversationById,
@@ -13,6 +14,7 @@ import {
   mockNewMessage,
   mockUpdatedConversation,
   mockMultipleMessagesConversation,
+  mockRecipient,
 } from '../../__mocks__';
 
 describe('ConversationsService', () => {
@@ -45,6 +47,12 @@ describe('ConversationsService', () => {
     repo = module.get<MongoRepository<Conversation>>(
       getRepositoryToken(Conversation, 'MongoDB'),
     );
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {
@@ -57,10 +65,7 @@ describe('ConversationsService', () => {
 
   describe('createConversation', () => {
     it('should create a conversation and save it to the db', async () => {
-      const spyRepo = jest
-        .spyOn(repo, 'save')
-        .mockResolvedValue(mockNewConversation);
-
+      const spyRepo = jest.spyOn(utils, 'doesExist').mockReturnValue(null);
       await expect(
         service.createConversation({
           recipient: 'eihab@yahoo.com',
@@ -68,7 +73,8 @@ describe('ConversationsService', () => {
         }),
       ).resolves.toEqual(mockNewConversation);
 
-      expect(spyRepo).toHaveBeenCalledTimes(1);
+      expect(spyRepo).toHaveBeenCalled();
+      expect(spyRepo).toHaveBeenCalledWith(mockAuthUser, mockRecipient, repo);
     });
   });
 
@@ -83,7 +89,7 @@ describe('ConversationsService', () => {
   describe('getConversationById', () => {
     it('should return the specified conversation with the id', async () => {
       await expect(
-        service.getConversationById('66090b00edce27048b10cabc'),
+        service.getConversationById('66090b00edce27048b10cabc', mockAuthUser),
       ).resolves.toEqual(mockConversationById);
     });
   });

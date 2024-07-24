@@ -49,7 +49,10 @@ export class ConversationsService {
       creator: request.user,
       recipient: recipient,
     });
-    return await this.conversationRepo.save(conversation);
+
+    await this.conversationRepo.save(conversation);
+
+    return conversation;
   }
 
   async getAuthConversations(authUser: User | Account) {
@@ -74,6 +77,7 @@ export class ConversationsService {
         'There is no conversation found with that Id.',
       );
     }
+
     if (
       conversation.creator._id.toString() !== user._id.toString() &&
       conversation.recipient._id.toString() !== user._id.toString()
