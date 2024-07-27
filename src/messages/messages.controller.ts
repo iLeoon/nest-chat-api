@@ -31,6 +31,7 @@ export class MessagesController {
     });
     return message;
   }
+
   @Get()
   async getAllMessages() {
     return await this.messageService.getMessages();
