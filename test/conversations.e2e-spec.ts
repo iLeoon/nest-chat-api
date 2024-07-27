@@ -26,11 +26,6 @@ describe('ConversationController (e2e)', () => {
     await app.init();
   });
 
-  afterAll(async () => {
-    await repo.deleteMany({});
-    app.close();
-  });
-
   it('(POST) should login a user', (done) => {
     request(app.getHttpServer())
       .post('/auth/login')
