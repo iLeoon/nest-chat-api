@@ -69,18 +69,16 @@ describe('UserController (e2e)', () => {
   });
 
   describe('getUserByEmail', () => {
-    it('(GET) should return the user through the email', () => {
+    it('(GET) should return the user through the email', async () => {
+      const user = await repo.findOne({ where: { email: 'leon@yahoo.com' } });
+      const _id = user._id.toString();
       return request(app.getHttpServer())
         .get('/users/leon@yahoo.com')
         .set('Cookie', cookie)
-        .expect({
-          name: 'ahmed',
-          email: 'leon@yahoo.com',
-          image: null,
-        });
+        .expect({ ...user, _id });
     });
 
-    it('(GET) should throw an error if the account is not in the database', () => {
+    it('(GET) should throw an error if the email is not in the database', () => {
       return request(app.getHttpServer())
         .get('/users/leoeee@yahoo.com')
         .set('Cookie', cookie)

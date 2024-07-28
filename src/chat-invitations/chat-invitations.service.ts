@@ -37,6 +37,7 @@ export class ChatInviationService {
       receiver,
       this.conversationRepo,
     );
+
     if (existedConversation)
       throw new HttpException(
         'You already have a conversation with that user.',
@@ -56,7 +57,7 @@ export class ChatInviationService {
         receiver: authUser,
       },
     });
-    if (!invitations) {
+    if (invitations.length === 0) {
       throw new BadRequestException(
         'No chat invitations were found for that user',
       );
