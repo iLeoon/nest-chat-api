@@ -2,11 +2,11 @@ import { ObjectId } from 'mongodb';
 import { User, Account } from 'src/typeorm';
 
 export const mockAuthUser: User | Account = {
-  _id: new ObjectId('66090b00edce27048b10cabc'),
+  _id: new ObjectId('669e191f8b38d62dcfad803e'),
   name: 'ahmed',
   email: 'ahmed@yahoo.com',
   image: null,
-  password: '123',
+  password: 'ahmed@123',
 };
 
 export const mockRecipient: User | Account = {

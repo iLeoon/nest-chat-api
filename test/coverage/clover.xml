@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1721640438552" clover="3.2.0">
-  <project timestamp="1721640438553" name="All files">
+<coverage generated="1722073645771" clover="3.2.0">
+  <project timestamp="1722073645771" name="All files">
     <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1" elements="10" coveredelements="10" complexity="0" loc="9" ncloc="9" packages="1" files="1" classes="1"/>
     <file name="testUtils.ts" path="/home/ahmed/Programming/Chat app/nest-chat-api/test/testUtils.ts">
       <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <line num="2" count="2" type="stmt"/>
-      <line num="3" count="2" type="stmt"/>
-      <line num="4" count="2" type="stmt"/>
-      <line num="5" count="2" type="stmt"/>
-      <line num="7" count="2" type="stmt"/>
-      <line num="8" count="10" type="stmt"/>
-      <line num="18" count="10" type="stmt"/>
-      <line num="19" count="10" type="stmt"/>
-      <line num="20" count="10" type="stmt"/>
+      <line num="2" count="4" type="stmt"/>
+      <line num="3" count="4" type="stmt"/>
+      <line num="4" count="4" type="stmt"/>
+      <line num="5" count="4" type="stmt"/>
+      <line num="7" count="4" type="stmt"/>
+      <line num="8" count="24" type="stmt"/>
+      <line num="18" count="24" type="stmt"/>
+      <line num="19" count="24" type="stmt"/>
+      <line num="20" count="24" type="stmt"/>
     </file>
   </project>
 </coverage>
