@@ -1,73 +1,139 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Nest Chat API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A backend **real-time chat API** built with **NestJS**, designed around **WebSocket-based communication**, session-based authentication, and a MongoDB-backed data layer.  
+The project focuses on real-time connections, authentication flows, testing, and production-style backend structure.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Overview
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project demonstrates how to build a real-time chat backend with:
 
-## Installation
+- **WebSocket-based connections** for real-time messaging
+- **Session-based authentication**
+- **OAuth authentication** using Google and Twitter
+- **MongoDB** for persisting users, sessions, and chat-related data
+- **Structured logging**
+- **Full test coverage** using Jest
+- **Dockerized NoSQL database** for local development
+
+The focus is on **connection handling**, **authentication**, and **backend correctness**, rather than frontend concerns.
+
+---
+
+## Tech Stack
+
+### Backend
+- **NestJS**
+- **WebSockets**
+- **MongoDB**
+- Session-based authentication
+- OAuth (Google, Twitter)
+- Structured logging with winston
+- Testing with Jest
+
+### Infrastructure
+- **Docker**
+- **Docker Compose**
+
+---
+
+## Architecture Overview
+
+- The backend exposes a WebSocket server for handling real-time client connections.
+- Clients connect over WebSockets and maintain persistent sessions.
+- Authentication is handled using:
+  - Traditional credential-based login with sessions
+  - OAuth login via Google and Twitter
+- Session data and user state are persisted in MongoDB.
+- Logging is implemented to track connections, authentication events, and system errors.
+- The system is designed to be modular and testable.
+
+---
+
+## Real-Time Communication
+
+- Real-time messaging is handled using **WebSockets**.
+- Each client maintains a persistent connection to the server.
+- Connection lifecycle events (connect, disconnect) are explicitly handled.
+- Messages are routed through WebSocket gateways instead of HTTP endpoints.
+
+---
+
+
+### Authentication Methods
+- **Session-based authentication**
+- **OAuth authentication**
+  - Google
+  - Twitter
+
+### Session Handling
+- Sessions are persisted in **MongoDB**
+- Authenticated users maintain state across WebSocket connections
+- Authorization logic is enforced on protected WebSocket events
+
+
+---
+
+## Database Design (MongoDB)
+
+MongoDB is used to store:
+
+- User accounts
+- Authentication and session data
+- Chat-related entities (e.g. conversations, messages)
+
+
+---
+
+## Testing
+
+- The project includes **full test coverage** using **Jest**
+- Tests cover:
+  - Authentication flows
+  - WebSocket handlers
+  - Core business logic
+- The codebase is structured to allow isolated and repeatable tests
+
+
+
+---
+
+## Logging
+
+- Structured logging is implemented across the application
+- Logs capture:
+  - Connection lifecycle events
+  - Authentication attempts
+  - Errors and exceptional cases
+
+
+---
+
+## Environment Configuration
+
+The application uses a local `.env` file for configuration.
+
+The `.env` file is used to configure:
+- Database connection
+- Session settings
+- OAuth credentials
+- Application ports
+
+Environment files are created locally and are not committed to version control.
+
+---
+
+## Running the Project Locally
+
+### Start MongoDB (Docker)
 
 ```bash
-$ npm install
+docker-compose up --build
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+### Run the  backend
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+yarn install
+yarn start:dev
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
