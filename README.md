@@ -21,6 +21,23 @@ The focus is on **connection handling**, **authentication**, and **backend corre
 
 ---
 
+## Repository Separation
+
+This repository contains **only the backend service** for the chat application.
+
+- The **backend** (this repository) is responsible for:
+  - Real-time WebSocket communication
+  - Authentication and session management
+  - Data persistence and business logic
+- The [**frontend**](https://github.com/iLeoon/next-chat-app) is implemented in a **separate repository**
+  - Communicates with this backend via WebSockets and HTTP APIs
+  - Handles UI, client-side state, and user interactions
+
+This separation allows each part of the system to evolve independently and reflects
+real-world production architectures.
+
+---
+
 ## Tech Stack
 
 ### Backend
